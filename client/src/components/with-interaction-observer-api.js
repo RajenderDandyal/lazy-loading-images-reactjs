@@ -8,13 +8,22 @@ class WithInteractionApi extends Component {
     pageNo: 1,
     users: null
   };
+  getUsers = async () => {
+    let usersData = await users(this.state.pageNo);
+    console.log(usersData.results)
+    this.setState({users: usersData.results})
+  };
+
+  componentDidMount() {
+    this.getUsers()
+  }
 
   render() {
     return (
         <div className={'container'}>
           <h1 align="center">With Scroll, Resize, Orientation change events</h1>
           <div className={'userContainer'}>
-
+            {this.state.users?this.state.users.map(user=><UserCard user={user}/>):<p align="center">Loaading...</p>}
           </div>
 
         </div>

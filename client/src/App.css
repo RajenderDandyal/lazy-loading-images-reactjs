@@ -25,6 +25,7 @@ body {
   box-sizing: border-box;
 }
 .userCard{
+  min-width: 240px;
   width: 250px;
   height: 350px;
   margin: 5px;

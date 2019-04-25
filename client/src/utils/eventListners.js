@@ -30,6 +30,9 @@ let runLazyLoadImages = ()=>{
     }, 20);
   }
 
+  // to load for the first round .. for those images in viewport
+  lazyload()
+  //then lazyLoad through these events
   document.addEventListener("scroll", lazyload);
   window.addEventListener("resize", lazyload);
   window.addEventListener("orientationChange", lazyload);

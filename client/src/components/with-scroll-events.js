@@ -19,26 +19,28 @@ class WithScrollEvents extends Component {
       loading: false
     }, () => runLazyLoadImages())
   };
+  loadMore = () => {
+    let scrollHeight = Math.max(
+        document.body.scrollHeight, document.documentElement.scrollHeight,
+        document.body.offsetHeight, document.documentElement.offsetHeight,
+        document.body.clientHeight, document.documentElement.clientHeight
+    );
+    console.log(scrollHeight, window.pageYOffset)
+    if ((scrollHeight - window.scrollY) < 700) {
+      this.setState({pageNo: this.state.pageNo + 1}, () => this.getUsers())
+    }
+  }
   infiniteScroll = () => {
-
-    document.addEventListener('scroll', () => {
-      let scrollHeight = Math.max(
-          document.body.scrollHeight, document.documentElement.scrollHeight,
-          document.body.offsetHeight, document.documentElement.offsetHeight,
-          document.body.clientHeight, document.documentElement.clientHeight
-      );
-      console.log(scrollHeight, window.pageYOffset)
-      if ((scrollHeight - window.scrollY) < 700) {
-        this.setState({pageNo: this.state.pageNo + 1}, () => this.getUsers())
-      }
-    })
-
-
+    document.addEventListener('scroll', this.loadMore)
   }
 
   componentDidMount() {
     this.getUsers()
     this.infiniteScroll()
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('scroll',this.loadMore)
   }
 
   render() {

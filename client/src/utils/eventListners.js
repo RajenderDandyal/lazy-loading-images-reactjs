@@ -33,6 +33,6 @@ let runLazyLoadImages = ()=>{
     document.addEventListener("scroll", lazyload);
     window.addEventListener("resize", lazyload);
     window.addEventListener("orientationChange", lazyload);
-
+// remove them when the component will unmount
 }
  export {runLazyLoadImages}

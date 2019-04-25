@@ -1,0 +1,13 @@
+body {
+  margin:0;
+  padding:0;
+  font-family: 'Oswald', sans-serif;
+  color: #404040;
+}
+
+.links{
+  width:100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

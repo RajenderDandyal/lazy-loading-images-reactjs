@@ -1,4 +1,5 @@
 function interactionApi() {
+
   var lazyloadImages;
 console.log('intractionApi')
   if ("IntersectionObserver" in window) {

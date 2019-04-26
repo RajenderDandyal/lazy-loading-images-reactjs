@@ -17,7 +17,7 @@ class WithScrollEvents extends Component {
     this.setState({
       users: this.state.users ? [...this.state.users, ...usersData.results] : [...usersData.results],
       loading: false
-    }, () => runLazyLoadImages())
+    }, () => runLazyLoadImages(false))
   };
   loadMore = () => {
     let scrollHeight = Math.max(
@@ -41,6 +41,7 @@ class WithScrollEvents extends Component {
 
   componentWillUnmount() {
     document.removeEventListener('scroll',this.loadMore)
+    runLazyLoadImages(true)
   }
 
   render() {

@@ -18,7 +18,7 @@ class WithInteractionApi extends Component {
     this.setState({
       users: this.state.users ? [...this.state.users, ...usersData.results] : [...usersData.results],
       loading: false
-    }, () => interactionApi())
+    }, () =>  interactionApi())
   };
   loadMore = () => {
     let scrollHeight = Math.max(

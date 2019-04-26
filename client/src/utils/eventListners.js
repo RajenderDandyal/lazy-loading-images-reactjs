@@ -1,5 +1,12 @@
 
-let runLazyLoadImages = ()=>{
+let runLazyLoadImages = (removeListner)=>{
+  if (removeListner){
+    console.log('removeListner')
+    document.removeEventListener("scroll", lazyload);
+    window.removeEventListener("resize", lazyload);
+    window.removeEventListener("orientationChange", lazyload);
+    return
+  }
   console.log('runn8ing')
   var lazyloadImages = document.querySelectorAll("img.lazy");
   console.log(lazyloadImages)

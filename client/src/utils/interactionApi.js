@@ -8,13 +8,19 @@
 function interactionApi() {
 
   var lazyloadImages;
-console.log('intractionApi')
+  console.log('intractionApi')
   if ("IntersectionObserver" in window) {
 
     lazyloadImages = document.querySelectorAll("img.lazy");
     console.log(lazyloadImages)
-    var imageObserver = new IntersectionObserver(function(entries, observer) {
-      entries.forEach(function(entry) {
+    let options = {
+      root: null,//document.querySelector('#scrollArea'),
+      rootMargin: '0px',
+      threshold: 1.0
+    };
+    var imageObserver = new IntersectionObserver(callBack, options);
+    let callBack = function (entries, observer) {
+      entries.forEach(function (entry) {
         if (entry.isIntersecting) {
           var image = entry.target;
           image.src = image.dataset.src;
@@ -23,39 +29,40 @@ console.log('intractionApi')
           imageObserver.unobserve(image);
         }
       });
-    });
-
-    lazyloadImages.forEach(function(image) {
+    }
+    lazyloadImages.forEach(function (image) {
       imageObserver.observe(image);
     });
-  } /*else {
-    var lazyloadThrottleTimeout;
-    lazyloadImages = document.querySelectorAll(".lazy");
+  }
+  /*else {
+     var lazyloadThrottleTimeout;
+     lazyloadImages = document.querySelectorAll(".lazy");
 
-    function lazyload () {
-      if(lazyloadThrottleTimeout) {
-        clearTimeout(lazyloadThrottleTimeout);
-      }
+     function lazyload () {
+       if(lazyloadThrottleTimeout) {
+         clearTimeout(lazyloadThrottleTimeout);
+       }
 
-      lazyloadThrottleTimeout = setTimeout(function() {
-        var scrollTop = window.pageYOffset;
-        lazyloadImages.forEach(function(img) {
-          if(img.offsetTop < (window.innerHeight + scrollTop)) {
-            img.src = img.dataset.src;
-            img.classList.remove('lazy');
-          }
-        });
-        if(lazyloadImages.length == 0) {
-          document.removeEventListener("scroll", lazyload);
-          window.removeEventListener("resize", lazyload);
-          window.removeEventListener("orientationChange", lazyload);
-        }
-      }, 20);
-    }
+       lazyloadThrottleTimeout = setTimeout(function() {
+         var scrollTop = window.pageYOffset;
+         lazyloadImages.forEach(function(img) {
+           if(img.offsetTop < (window.innerHeight + scrollTop)) {
+             img.src = img.dataset.src;
+             img.classList.remove('lazy');
+           }
+         });
+         if(lazyloadImages.length == 0) {
+           document.removeEventListener("scroll", lazyload);
+           window.removeEventListener("resize", lazyload);
+           window.removeEventListener("orientationChange", lazyload);
+         }
+       }, 20);
+     }
 
-    document.addEventListener("scroll", lazyload);
-    window.addEventListener("resize", lazyload);
-    window.addEventListener("orientationChange", lazyload);
-  }*/
+     document.addEventListener("scroll", lazyload);
+     window.addEventListener("resize", lazyload);
+     window.addEventListener("orientationChange", lazyload);
+   }*/
 }
+
 export {interactionApi}

@@ -1,6 +1,5 @@
-
-let runLazyLoadImages = (removeListner)=>{
-  if (removeListner){
+let runLazyLoadImages = (removeListner) => {
+  if (removeListner) {
     console.log('removeListner')
     document.removeEventListener("scroll", lazyload);
     window.removeEventListener("resize", lazyload);
@@ -12,16 +11,16 @@ let runLazyLoadImages = (removeListner)=>{
   console.log(lazyloadImages)
   var lazyloadThrottleTimeout;
 
-  function lazyload () {
-    if(lazyloadThrottleTimeout) {
+  function lazyload() {
+    if (lazyloadThrottleTimeout) {
       clearTimeout(lazyloadThrottleTimeout);
     }
 
-    lazyloadThrottleTimeout = setTimeout(function() {
+    lazyloadThrottleTimeout = setTimeout(function () {
       var scrollTop = window.pageYOffset;
-      lazyloadImages.forEach(function(img) {
+      lazyloadImages.forEach(function (img) {
         //if(img.offsetTop < (window.innerHeight + scrollTop)) {
-        if(img.getBoundingClientRect().top > 0 && img.getBoundingClientRect().top < window.innerHeight) {
+        if (img.getBoundingClientRect().top > 0 && img.getBoundingClientRect().top < window.innerHeight) {
           //console.log(img.offsetTop, (window.innerHeight + scrollTop))
           img.src = img.dataset.src;
           img.classList.remove('lazy');
@@ -29,7 +28,7 @@ let runLazyLoadImages = (removeListner)=>{
         }
 
       });
-      if(lazyloadImages.length == 0) {
+      if (lazyloadImages.length == 0) {
         document.removeEventListener("scroll", lazyload);
         window.removeEventListener("resize", lazyload);
         window.removeEventListener("orientationChange", lazyload);

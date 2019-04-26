@@ -5,6 +5,16 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
+/// how intersection api works
+// with events, scroll method invokes call back on every scroll theat tracks the position of target..
+// which is executed by the main thread.. can lead to ui issues if having a lot of listeners on scroll events...
+// ex displaying add dynamically on infinite scroll
+// running animations based on scoll events
+//so all these callbacks runs in ain thread whenever user scroll.. to track their target position/element
+// Intersection api to rescue.. this only calls callBack when the target interects the position/viewport
+// not on every scroll .. hence saving the workload on main thread
+
+
 function interactionApi() {
 
   var lazyloadImages;
@@ -17,9 +27,8 @@ function interactionApi() {
       root: null,//document.querySelector('#scrollArea'),
       rootMargin: '0px',
       threshold: 1.0
-    };
-    var imageObserver = new IntersectionObserver(callBack, options);
-    let callBack = function (entries, observer) {
+    }
+    var imageObserver = new IntersectionObserver(function (entries, observer) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
           var image = entry.target;
@@ -29,7 +38,8 @@ function interactionApi() {
           imageObserver.unobserve(image);
         }
       });
-    }
+    }, options);
+
     lazyloadImages.forEach(function (image) {
       imageObserver.observe(image);
     });

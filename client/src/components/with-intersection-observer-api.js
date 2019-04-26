@@ -47,7 +47,7 @@ class WithInteractionApi extends Component {
   render() {
     return (
         <div className={'container'}>
-          <h1 align="center">With Interaction Observer Api and infinite scroll</h1>
+          <h1 align="center">With Intersection Observer Api and infinite scroll</h1>
           <div className={'userContainer'}>
             {this.state.users?this.state.users.map(user=><UserCard key={new Date() + Math.random()} user={user}/>):<p align="center">Loaading...</p>}
           </div>

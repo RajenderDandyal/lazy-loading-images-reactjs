@@ -17,7 +17,7 @@ class Home extends Component {
           </div>
           <div className={'links'}>
             <Link to={'/with-interaction-observer-api'}>
-              <h3>with interaction observer api</h3>
+              <h3>with intersection observer api</h3>
             </Link>
           </div>
         </div>

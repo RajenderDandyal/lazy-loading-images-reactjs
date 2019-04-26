@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Route, Switch, withRouter} from 'react-router-dom';
 import './App.css';
 import Home from "./components/Home";
-import WithInteractionApi from "./components/with-interaction-observer-api";
+import WithInteractionApi from "./components/with-intersection-observer-api";
 import WithScrollEvents from "./components/with-scroll-events";
 
 class App extends Component {

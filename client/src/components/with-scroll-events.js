@@ -25,7 +25,7 @@ class WithScrollEvents extends Component {
         document.body.offsetHeight, document.documentElement.offsetHeight,
         document.body.clientHeight, document.documentElement.clientHeight
     );
-    console.log(scrollHeight, window.pageYOffset)
+    //console.log(scrollHeight, window.pageYOffset)
     if ((scrollHeight - window.scrollY) < (window.innerHeight/1000 + window.innerHeight)) {
       this.setState({pageNo: this.state.pageNo + 1}, () => this.getUsers())
     }

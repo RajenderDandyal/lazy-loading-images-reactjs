@@ -13,6 +13,16 @@
 //so all these callbacks runs in ain thread whenever user scroll.. to track their target position/element
 // Intersection api to rescue.. this only calls callBack when the target interects the position/viewport
 // not on every scroll .. hence saving the workload on main thread
+///////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+// if the callback is to perform heavy task then use
+// 1. workers .. for heavy duty work eg image processing or iterating a big loop
+// 2. getAnimationFrame() for animations .. not setTimeout.. if callback needs to change the DOM
+// 3. request​Idle​Callback()  aka Background Tasks API --> for less important work -->
+// -->provides the ability to queue tasks to be executed automatically by the user agent when it determines that there is free time to do so
+// 4. promises ... can be used for heavy lifting tasks ...takes that workload to new microTask api and return when resolved .. into the main thread
+// 5. setTimeOut .. bad choice for heavy duty tasks ... as it will simply queue the callback .. but call back will finally be executed in the main thread
+
 
 
 function interactionApi() {

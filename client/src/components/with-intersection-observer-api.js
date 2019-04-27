@@ -20,31 +20,39 @@ class WithInteractionApi extends Component {
       loading: false
     }, () => interactionApi())
   };
-  loadMore = () => {
-    let scrollHeight = Math.max(
-        document.body.scrollHeight, document.documentElement.scrollHeight,
-        document.body.offsetHeight, document.documentElement.offsetHeight,
-        document.body.clientHeight, document.documentElement.clientHeight
-    );
-    //console.log(scrollHeight, window.pageYOffset)
-    if ((scrollHeight - window.scrollY) < (window.innerHeight / 1000 + window.innerHeight)) {
-      console.log((scrollHeight - window.scrollY), (window.innerHeight / 1000 + window.innerHeight))
-
-      this.setState({pageNo: this.state.pageNo + 1}, () => this.getUsers())
-    }
-  }
   infiniteScroll = () => {
-    document.addEventListener('scroll', this.loadMore)
-  }
 
+    // Options
+    let options = {
+      root: null, // Page as root
+      rootMargin: '0px',
+      threshold: 1.0
+    };
+    // Create an observer
+    this.observer = new IntersectionObserver(
+        this.handleObserver.bind(this), //callback
+        options
+    );
+    //Observ the `loadingRef`
+    this.observer.observe(this.loadingRef);
+  }
+  handleObserver(entities, observer) {
+    const y = entities[0].boundingClientRect.y;
+    console.log("y",y)
+    this.setState({pageNo: this.state.pageNo + 1}, () => this.getUsers())
+    // if (this.state.prevY > y) {
+    //   this.setState({pageNo: this.state.pageNo + 1}, () => this.getUsers())
+    // }
+    this.setState({ prevY: y });
+  }
   componentDidMount() {
-    this.getUsers()
+    //this.getUsers()
     interactionApi()
     this.infiniteScroll()
   }
 
   componentWillUnmount() {
-    document.removeEventListener('scroll', this.loadMore)
+   // document.removeEventListener('scroll', this.loadMore)
   }
 
   render() {
@@ -55,7 +63,11 @@ class WithInteractionApi extends Component {
             {this.state.users ? this.state.users.map(user => <UserCard key={new Date() + Math.random()} user={user}/>) :
                 <p align="center">Loaading...</p>}
           </div>
-          <div>{this.state.loading ? <p align="center">Loading more... wait :) </p> : null}</div>
+          <div
+              ref={loadingRef => (this.loadingRef = loadingRef)}
+          >
+            <span >Loading...</span>
+          </div>
         </div>
     );
   }
